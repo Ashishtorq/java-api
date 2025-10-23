@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  task-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: task-api:1.0
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/tasks || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
